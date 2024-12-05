@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=4 uid="uid://bv5wl3f5ftp44"]
+
+[ext_resource type="Texture2D" uid="uid://c8rhnlan2ejvc" path="res://Assets/Rocky Roads/Backgrounds/mountains_a.png" id="1_kttvo"]
+[ext_resource type="Texture2D" uid="uid://dmgujjhfku6j3" path="res://Assets/Rocky Roads/Deco/clouds.png" id="2_binrm"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_4x4sj"]
+tile_data = PackedInt32Array(0, 0, 0, 1, 65536, 0, 2, 131072, 0, 3, 196608, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_253i7"]
+tile_data = PackedInt32Array(2, 131072, 1)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_eelav"]
+tile_data = PackedInt32Array(0, 0, 2, 1, 65536, 2, 2, 131072, 2, 3, 196608, 2)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_au3bn"]
+texture = ExtResource("2_binrm")
+0:0/next_alternative_id = 2
+0:0/0 = 0
+1:0/next_alternative_id = 2
+1:0/0 = 0
+2:0/next_alternative_id = 2
+2:0/0 = 0
+3:0/next_alternative_id = 2
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_wb5yi"]
+sources/0 = SubResource("TileSetAtlasSource_au3bn")
+pattern_0 = SubResource("TileMapPattern_4x4sj")
+pattern_1 = SubResource("TileMapPattern_253i7")
+pattern_2 = SubResource("TileMapPattern_eelav")
+
+[node name="SnowParalax" type="Node2D"]
+z_index = -10
+
+[node name="Mountain" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.1, 0.6)
+repeat_size = Vector2(947, 0)
+repeat_times = 4
+
+[node name="MountainsA" type="Sprite2D" parent="Mountain"]
+modulate = Color(0.775063, 0.775063, 0.775063, 1)
+texture_repeat = 2
+position = Vector2(474, 374)
+scale = Vector2(3.70313, 4.33594)
+texture = ExtResource("1_kttvo")
+
+[node name="Clouds" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.2, 0.6)
+repeat_size = Vector2(947, 0)
+autoscroll = Vector2(-15, 0)
+repeat_times = 3
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Clouds"]
+texture_repeat = 2
+scale = Vector2(3, 3)
+tile_map_data = PackedByteArray("AAACAAYAAAAAAAAAAAADAAYAAAABAAAAAAAEAAYAAAACAAAAAAAFAAYAAAADAAAAAAAFAAkAAAAAAAEAAAAGAAkAAAABAAEAAAAHAAkAAAACAAEAAAAMAAcAAAAAAAIAAAANAAcAAAABAAIAAAAOAAcAAAACAAIAAAAPAAcAAAADAAIAAAAUAAcAAAAAAAEAAAAVAAcAAAABAAEAAAAWAAcAAAACAAEAAAALAAMAAAAAAAEAAAAMAAMAAAABAAEAAAANAAMAAAACAAEAAAAAAAMAAAAAAAAAAAABAAMAAAABAAAAAAACAAMAAAACAAAAAAADAAMAAAADAAAAAAASAAIAAAAAAAEAAAATAAIAAAABAAEAAAAUAAIAAAACAAEAAAANAAAAAAAAAAAAAAAOAAAAAAABAAAAAAAPAAAAAAACAAAAAAAQAAAAAAADAAAAAAAWAAAAAAAAAAEAAAAXAAAAAAABAAEAAAAYAAAAAAACAAEAAAAFAAIAAAAAAAIAAAAGAAIAAAABAAIAAAAHAAIAAAACAAIAAAAIAAIAAAADAAIAAAAHAAUAAAAAAAEAAAAIAAUAAAABAAEAAAAJAAUAAAACAAEAAAAZAAMAAAAAAAEAAAAaAAMAAAABAAEAAAAbAAMAAAACAAEAAAAkAAUAAAADAAIAAAAYAAYAAAAAAAAAAAAZAAYAAAABAAAAAAAaAAYAAAACAAAAAAAbAAYAAAADAAAAAAAbAAEAAAAAAAAAAAAcAAEAAAABAAAAAAAdAAEAAAACAAAAAAAdAAQAAAAAAAAAAAAeAAEAAAADAAAAAAAeAAQAAAABAAAAAAAfAAQAAAACAAAAAAAgAAAAAAAAAAIAAAAgAAQAAAADAAAAAAAgAAcAAAAAAAEAAAAhAAAAAAABAAIAAAAhAAcAAAABAAEAAAAiAAAAAAACAAIAAAAiAAMAAAAAAAEAAAAiAAcAAAACAAEAAAAjAAAAAAADAAIAAAAjAAMAAAABAAEAAAAkAAMAAAACAAEAAAAmAAEAAAAAAAEAAAAnAAEAAAABAAEAAAAnAAUAAAAAAAIAAAAoAAEAAAACAAEAAAAoAAUAAAABAAIAAAApAAUAAAACAAIAAAAqAAUAAAADAAIAAAAtAAAAAAAAAAEAAAAuAAAAAAABAAEAAAAvAAAAAAACAAEAAAAvAAUAAAAAAAEAAAAwAAUAAAABAAEAAAAxAAUAAAACAAEAAAAzAAQAAAAAAAAAAAA0AAEAAAAAAAEAAAA0AAQAAAABAAAAAAA1AAEAAAABAAEAAAA1AAQAAAACAAAAAAA2AAEAAAACAAEAAAA2AAQAAAADAAAAAAA=")
+tile_set = SubResource("TileSet_wb5yi")

@@ -1,0 +1,20 @@
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://cry6o6uotpksc"]
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_jw25g"]
+resource_name = "Reverb"
+room_size = 0.05
+damping = 0.22
+spread = 0.18
+dry = 0.19
+wet = 0.08
+
+[resource]
+bus/0/volume_db = 6.02
+bus/0/effect/0/effect = SubResource("AudioEffectReverb_jw25g")
+bus/0/effect/0/enabled = true
+bus/1/name = &"Game"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 6.02
+bus/1/send = &"Master"

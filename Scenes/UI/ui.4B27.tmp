@@ -1,0 +1,94 @@
+[gd_scene load_steps=6 format=3 uid="uid://dgr3aowy3j8wt"]
+
+[ext_resource type="Script" path="res://Scripts/ui.gd" id="1_lxcam"]
+[ext_resource type="PackedScene" uid="uid://dtg43u0k6scfk" path="res://Scenes/UI/button.tscn" id="1_qu3wq"]
+[ext_resource type="PackedScene" uid="uid://c62cl676dfdum" path="res://Addons/addons/virtual_joystick/virtual_joystick_scene.tscn" id="2_5fsp3"]
+
+[sub_resource type="GDScript" id="GDScript_npijn"]
+script/source = "class_name mask_joystick
+extends Control
+
+@onready var ready_scale_x = float(scale.x/1.4)
+
+func _ready():
+	pass
+func ready_scale_mode():
+	pass
+
+
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0t1t"]
+size = Vector2(200, 200)
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_lxcam")
+android_controls = true
+
+[node name="touch_controls" type="CanvasLayer" parent="."]
+
+[node name="Mask Virtual Joystick" type="Control" parent="touch_controls"]
+layout_mode = 3
+anchor_top = 0.75
+anchor_right = 0.155
+anchor_bottom = 1.0
+offset_left = 178.0
+offset_top = -3.05176e-05
+offset_right = -0.559998
+offset_bottom = -162.0
+grow_vertical = 0
+script = SubResource("GDScript_npijn")
+
+[node name="Area2D" type="Area2D" parent="touch_controls/Mask Virtual Joystick"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="touch_controls/Mask Virtual Joystick/Area2D"]
+shape = SubResource("RectangleShape2D_x0t1t")
+
+[node name="Virtual Joystick" parent="touch_controls/Mask Virtual Joystick" groups=["Scaleable_node"] instance=ExtResource("2_5fsp3")]
+layout_direction = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.728
+anchor_right = 0.173
+offset_left = -26.846
+offset_top = -33.859
+offset_right = 49.858
+offset_bottom = 62.885
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+joystick_mode = 1
+
+[node name="Button dash" parent="touch_controls" groups=["Scaleable_node"] instance=ExtResource("1_qu3wq")]
+layout_direction = 1
+anchors_preset = -1
+anchor_left = 0.897
+anchor_top = 0.6
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -0.343994
+offset_top = 0.199982
+offset_right = -119.0
+offset_bottom = -259.0
+grow_horizontal = 2
+grow_vertical = 2
+Input_received = "ui_dash"
+
+[node name="Button jump" parent="touch_controls" groups=["Scaleable_node"] instance=ExtResource("1_qu3wq")]
+layout_direction = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.801
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.559937
+offset_top = -0.0480347
+offset_right = -322.0
+offset_bottom = -129.0
+grow_horizontal = 0
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true

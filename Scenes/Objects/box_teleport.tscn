@@ -1,0 +1,105 @@
+[gd_scene load_steps=10 format=3 uid="uid://b0xha066x6mlc"]
+
+[ext_resource type="Script" path="res://Scripts/box_teleport.gd" id="1_jcq3r"]
+[ext_resource type="Texture2D" uid="uid://c3o4mab7iuq3e" path="res://Assets/Rocky Roads/Objects/brick_box.png" id="1_nnvng"]
+[ext_resource type="AudioStream" uid="uid://cnuwrjr874ndc" path="res://Sounds/spawned.ogg" id="3_t2pno"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gmnjj"]
+size = Vector2(32, 23)
+
+[sub_resource type="Animation" id="Animation_30ytr"]
+resource_name = "Force_Spawn"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="Animation" id="Animation_wrr4w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="Animation" id="Animation_w8nbo"]
+resource_name = "Spawn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_srxmw"]
+resource_name = "Un_Spawn"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5rpso"]
+_data = {
+"Force_Spawn": SubResource("Animation_30ytr"),
+"RESET": SubResource("Animation_wrr4w"),
+"Spawn": SubResource("Animation_w8nbo"),
+"Un_Spawn": SubResource("Animation_srxmw")
+}
+
+[node name="Box_teleport" type="Area2D"]
+script = ExtResource("1_jcq3r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_gmnjj")
+debug_color = Color(0.823529, 0, 0.898039, 0.0941176)
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_5rpso")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_nnvng")
+hframes = 7
+frame = 5
+
+[node name="SoundSpawn" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_t2pno")
+attenuation = 0.517633
+bus = &"Game"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

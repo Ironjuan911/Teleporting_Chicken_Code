@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bk67ynbjy6mag"]
+
+[ext_resource type="Script" path="res://Scripts/game_data.gd" id="1_mk5td"]
+
+[node name="GameData" type="Node2D"]
+script = ExtResource("1_mk5td")
+game_data = {
+"level_number": 2,
+"zone_number": 1
+}

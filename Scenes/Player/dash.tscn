@@ -1,0 +1,93 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgja52b7l4of3"]
+
+[ext_resource type="Script" path="res://Scripts/dash_animation.gd" id="1_4crd7"]
+[ext_resource type="Texture2D" uid="uid://cy6n2mhwnxu5v" path="res://Assets/Rocky Roads/Enemies/chicken_dash.png" id="2_f0ofv"]
+
+[sub_resource type="Animation" id="Animation_ddc6a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8pw3q"]
+resource_name = "Unspawn"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.3001, 0.3002),
+"transitions": PackedFloat32Array(1, 10.556, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"total_unspawn"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fqa40"]
+_data = {
+"RESET": SubResource("Animation_ddc6a"),
+"Unspawn": SubResource("Animation_8pw3q")
+}
+
+[sub_resource type="Shader" id="Shader_lj4ew"]
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+}
+
+//void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lxl7o"]
+shader = SubResource("Shader_lj4ew")
+
+[node name="Dash" type="Node2D"]
+z_index = 2
+script = ExtResource("1_4crd7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fqa40")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+material = SubResource("ShaderMaterial_lxl7o")
+position = Vector2(0, -10)
+texture = ExtResource("2_f0ofv")
+hframes = 7
+vframes = 2
+frame = 8

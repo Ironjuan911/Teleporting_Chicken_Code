@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://dk1psaopwmm7t"]
+
+[ext_resource type="Script" path="res://Scripts/set_limit_camara.gd" id="1_2mgvs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b13f7"]
+size = Vector2(50, 6)
+
+[node name="SetLimitCamara" type="Node2D"]
+script = ExtResource("1_2mgvs")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_b13f7")
+debug_color = Color(0.658824, 0.435294, 0.72549, 0.156863)
+
+[node name="RayCastUp" type="RayCast2D" parent="."]
+position = Vector2(-25, -4)
+rotation = 3.14159
+scale = Vector2(1, 0.3)
+target_position = Vector2(-52, 0)
+collision_mask = 8
+
+[node name="RayCastDown" type="RayCast2D" parent="."]
+position = Vector2(25, 4)
+scale = Vector2(1, 0.3)
+target_position = Vector2(-52, 0)
+collision_mask = 8
+
+[node name="RayCast" type="RayCast2D" parent="."]
+position = Vector2(0, 6)
+scale = Vector2(0.25, 0.5)
+target_position = Vector2(0, -24)
+collision_mask = 0
+
+[node name="TimerDashPlayer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="TimerProcess" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="TimerTest" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="TimerExit" type="Timer" parent="."]
+wait_time = 0.6
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="TimerDashPlayer" to="." method="_on_timer_dash_player_timeout"]
+[connection signal="timeout" from="TimerProcess" to="." method="_on_timer_process_timeout"]
+[connection signal="timeout" from="TimerTest" to="." method="_on_timer_test_timeout"]
+[connection signal="timeout" from="TimerExit" to="." method="_on_timerexit_timeout"]

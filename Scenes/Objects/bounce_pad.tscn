@@ -1,0 +1,121 @@
+[gd_scene load_steps=11 format=3 uid="uid://tgle6ma7j3ei"]
+
+[ext_resource type="Script" path="res://Scripts/bounce_pad.gd" id="1_gq4mn"]
+[ext_resource type="Texture2D" uid="uid://bhbp0bx3gi2ow" path="res://Assets/Rocky Roads/Objects/bounce pad.png" id="1_q03d6"]
+[ext_resource type="Texture2D" uid="uid://dsv1dbh460jsm" path="res://Assets/Rocky Roads/FX/particle.png" id="3_oeope"]
+[ext_resource type="AudioStream" uid="uid://b8ablml6pbwal" path="res://Sounds/bounce_pad.ogg" id="4_1lik2"]
+
+[sub_resource type="Animation" id="Animation_ndvea"]
+resource_name = "Bounce"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.8, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [3, 1, 2, 1, 2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_hkt2r"]
+resource_name = "Pressed"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_2cncp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_213dw"]
+_data = {
+"Bounce": SubResource("Animation_ndvea"),
+"Pressed": SubResource("Animation_hkt2r"),
+"RESET": SubResource("Animation_2cncp")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5i25c"]
+size = Vector2(14, 3)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x4pou"]
+lifetime_randomness = 0.6
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(6, 10, 1)
+gravity = Vector3(0, 0, 0)
+
+[node name="Slinghot" type="Node2D"]
+script = ExtResource("1_gq4mn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("1_q03d6")
+hframes = 4
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, 4)
+collision_layer = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-8, 4, 8, 4, 8, 0, -8, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_213dw")
+}
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_5i25c")
+
+[node name="Timerbounce" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="bounceparticles" type="GPUParticles2D" parent="."]
+z_index = 1
+position = Vector2(0, -6)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_x4pou")
+texture = ExtResource("3_oeope")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+randomness = 0.4
+
+[node name="SoundBounce" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_1lik2")
+volume_db = -9.0
+pitch_scale = 1.23
+bus = &"Game"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timerbounce" to="." method="_on_timerbounce_timeout"]
