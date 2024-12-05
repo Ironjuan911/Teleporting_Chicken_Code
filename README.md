@@ -1,2 +1,2 @@
-# Teleporting_Chiken
+# Teleporting_Chicken
 My game in Godot
